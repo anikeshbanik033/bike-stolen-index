@@ -1,0 +1,34 @@
+.pagination a {
+  cursor: pointer;
+}
+
+.pagination a:hover {
+  color: #072a43 !important;
+}
+
+.pagination li.previous a,
+.pagination li.next a {
+  font-weight: 500 !important;
+  font-size: 17px;
+  color: #184443 !important;
+}
+
+.pagination li.previous.disabled a,
+.pagination li.next.disabled a {
+  display: none !important;
+}
+
+.pagination li a {
+  margin: 0 8px;
+  font-weight: 600 !important;
+  color: #ccc !important;
+}
+
+.pagination li.active a {
+  color: #ffffff !important;
+  padding: 4px 10px;
+  border-radius: 100%;
+  font-size: 17px;
+  box-shadow: 0 0 3px #909090;
+  background-color: #184443;
+}
