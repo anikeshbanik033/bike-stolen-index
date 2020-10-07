@@ -46,6 +46,7 @@ function LandingPage() {
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
   const [loader, setLoader] = useState(true);
+  const [errorState, setErrorState] = useState(false);
 
   useEffect(() => {
     getIncidentsList(offset);
@@ -64,14 +65,13 @@ function LandingPage() {
       .then((success) => {
         if (success && success.data) {
           setLoader(false);
-          console.log(success);
-          console.log(success.headers)
           setIncidentList(success && success.data && success.data.incidents);
-          if (searchContent == null || searchContent == '') {
+          if (searchContent === null || searchContent === '') {
             setPageCount(118886 / limit)
           }
           else {
-            setPageCount(0)
+            setPageCount(0);
+            setErrorState(true);
           }
         }
       })
@@ -96,7 +96,7 @@ function LandingPage() {
         <div className={`col-sm-12 col-md-12 col-lg-10`}>
           <div className={`mb-4 mt-3 row`}>
             <div className="col-sm-12 col-md-12 col-lg-12 pl-lg-0 d-flex mb-4">
-              <img src={logo} />
+              <img src={logo} alt="logo img" />
               <p className="pt-4 ml-5">
                 <span className={`font-weight-bold ${a.fontSize30}`}>
                   Police Departament of Berlin
@@ -129,7 +129,7 @@ function LandingPage() {
               <div className={`col-sm-12 col-md-12 col-lg-10 shadow card mt-3 pt-2 pb-2 ${a.card}`}>
                 <div className={`row ${a.colorT}`}>
                   <div className={`col-sm-3 col-lg-3 col-md-3`}>
-                    <img src={item.media.image_url ? item.media.image_url : NoImage} className={`img-fluid w-100 ${a.imageSize}`} height="300" />
+                    <img src={item.media.image_url ? item.media.image_url : NoImage} className={`img-fluid w-100 ${a.imageSize}`} height="300" alt="card img" />
                   </div>
                   <div className={`col-sm-8 col-lg-8 col-md-8`}>
                     <p className={` ${a.title}`}>{item.title}</p>
@@ -143,10 +143,14 @@ function LandingPage() {
               </div>
             )
 
-              :
-              <div className="col-sm-12 col-md-12 col-lg-10">
-                No results
+              : errorState === false ?
+                <div className="col-sm-12 col-md-12 col-lg-10">
+                  No results
               </div>
+                :
+                <div className="col-sm-12 col-md-12 col-lg-10 text-danger">
+                  Oops, something went wrong
+                 </div>
         }
 
         <div className="mt-5">
